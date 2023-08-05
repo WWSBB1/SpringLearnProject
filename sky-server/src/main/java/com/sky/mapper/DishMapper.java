@@ -29,4 +29,7 @@ public interface DishMapper {
 
     @Select("select * from dish where id = #{dishId}")
     Dish getById(Long dishId);
+
+    @AutoFill(value = OperationType.UPDATE)
+    void update(Dish dish);
 }
