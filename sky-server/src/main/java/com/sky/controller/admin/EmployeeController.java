@@ -97,7 +97,6 @@ public class EmployeeController {
         PageResult pageResult=employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageResult);
     }
-
     @PostMapping("/status/{status}")
     @ApiOperation("启用禁用员工账号")
     public Result startOrStop(@PathVariable Integer status,Long id){
@@ -105,7 +104,6 @@ public class EmployeeController {
         employeeService.startOrStop(status,id);
         return Result.success();
     }
-
     @GetMapping("/{id}")
     @ApiOperation("根据id查询员工")
     public Result<Employee> getById(@PathVariable Long id){
@@ -120,5 +118,4 @@ public class EmployeeController {
         employeeService.update(employeeDTO);
         return Result.success();
     }
-
 }
