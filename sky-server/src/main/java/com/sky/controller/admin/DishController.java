@@ -2,6 +2,7 @@ package com.sky.controller.admin;
 
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
+import com.sky.entity.Dish;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.DishService;
@@ -41,11 +42,10 @@ public class DishController {
 
     @DeleteMapping
     @ApiOperation("批量删除菜品")
-    public Result delete(@RequestParam List<Long> dishIds){
+    public Result delete(@RequestParam("ids") List<Long> dishIds){
         log.info("批量删除菜品: {}",dishIds);
         dishService.deleteBatch(dishIds);
-
-        return null;
+        return Result.success();
     }
     @GetMapping("/{id}")
     @ApiOperation("根据id查询菜品")
@@ -53,6 +53,13 @@ public class DishController {
         log.info("根据id查询菜品: {}",dishId);
         DishVO dishVO = dishService.getByIdWithFlavor(dishId);
         return Result.success(dishVO);
+    }
+    @GetMapping("/list")
+    @ApiOperation("根据分类id查询菜品")
+    public Result<List<Dish>> list(Long categoryId){
+        log.info("根据分类id查询菜品: {}",categoryId);
+        List<Dish> dishes=dishService.getByCategoryId(categoryId);
+        return Result.success(dishes);
     }
     @PutMapping
     @ApiOperation("修改菜品")

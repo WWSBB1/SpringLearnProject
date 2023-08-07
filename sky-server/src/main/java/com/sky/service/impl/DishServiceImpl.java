@@ -63,9 +63,9 @@ public class DishServiceImpl implements DishService {
         return new PageResult(page.getTotal(), page.getResult());
     }
 
-    @Override
+    @Transactional
     public void deleteBatch(List<Long> dishIds) {
-        // 查状态
+        // 删除前置条件-状态-查询
         for (Long dishId : dishIds){
             Dish dish = dishMapper.getById(dishId);
             if (dish.getStatus() == StatusConstant.ENABLE){
@@ -73,21 +73,27 @@ public class DishServiceImpl implements DishService {
             }
         }
 
+        // 删除前置条件-关联引用-查询
         List<Long> setmealIds = setmealDishMapper.getSetmealIdsByDishIds(dishIds);
-
         if (setmealIds!=null&&setmealIds.size()>0){
             throw new DeletionNotAllowedException(MessageConstant.DISH_BE_RELATED_BY_SETMEAL);
         }
+        dishMapper.deleteByIds(dishIds);
     }
 
     @Override
     public DishVO getByIdWithFlavor(Long dishId) {
-        Dish dish = dishMapper.getById(dishId);
-        List<DishFlavor> dishFlavors= dishFlavorMapper.getByDishId(dishId);
-        DishVO dishVO = new DishVO();
-        BeanUtils.copyProperties(dish,dishVO);
+        DishVO dishVO = new DishVO();//创建VO视图对象
+
+        Dish dish = dishMapper.getById(dishId);//获取套餐的基础信息
+        List<DishFlavor> dishFlavors= dishFlavorMapper.getByDishId(dishId);//获取套餐关联的菜品列表信息
+
+        //将前面两个准备好的对象的属性转移
+        if (dish!=null)
+            BeanUtils.copyProperties(dish,dishVO);
         dishVO.setFlavors(dishFlavors);
-        return dishVO;
+
+        return dishVO;//返回
     }
 
     @Override
@@ -107,5 +113,11 @@ public class DishServiceImpl implements DishService {
             dishFlavorMapper.insertBatch(flavors);
         }
 
+    }
+
+    @Override
+    public List<Dish> getByCategoryId(Long categoryId) {
+        List<Dish> dishes = dishMapper.getByCategoryId(categoryId);
+        return dishes;
     }
 }
