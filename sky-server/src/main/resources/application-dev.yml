@@ -11,3 +11,7 @@ sky:
     access-key-id: "00NIRRX1AF0Y3K37LXXL"
     access-key-secret: "osU04kucQrK1aMJI2sswz7PMiyoD3EmswzFSVm0w"
     bucket-name: "spring"
+  redis:
+    host: localhost
+    port: 11112
+    database: 1
