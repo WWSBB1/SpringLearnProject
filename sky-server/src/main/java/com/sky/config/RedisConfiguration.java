@@ -12,16 +12,13 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @Date 2023/8/7 21:24
  * @PackageName:com.sky.config
  * @ClassName: RedisConfiguration
- * @Description: TODO
+ * @Description:
  * @Version 1.0
  */
 
 @Configuration
 @Slf4j
 public class RedisConfiguration {
-
-
-
 
     @Bean
     public RedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory){

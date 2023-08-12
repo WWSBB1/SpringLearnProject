@@ -40,4 +40,8 @@ public interface DishMapper {
 
 
     void deleteByIds(List<Long> dishIds);
+
+    //TODO
+    @Select("select * from dish")
+    List<Dish> list(Dish dish);
 }
