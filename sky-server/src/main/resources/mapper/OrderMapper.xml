@@ -36,4 +36,28 @@
         </set>
         where id = #{id}
     </update>
+    <select id="pageQuery" resultType="com.sky.vo.OrderVO">
+        select o.* , d.* from orders o left outer join order_detail d on d.order_id = o.id
+        <where>
+            <if test="o.number != null and o.number!=''">
+                and o.number like concat('%',#{o.number},'%')
+            </if>
+            <if test="o.phone != null and o.phone!=''">
+                and o.phone like concat('%',#{o.phone},'%')
+            </if>
+            <if test="o.userId != null">
+                and user_id = #{o.userId}
+            </if>
+            <if test="o.status != null">
+                and o.status = #{o.status}
+            </if>
+            <if test="o.beginTime != null">
+                and o.order_time &gt;= #{o.beginTime}
+            </if>
+            <if test="o.endTime != null">
+                and o.order_time &lt;= #{o.endTime}
+            </if>
+        </where>
+        order by o.order_time desc
+    </select>
 </mapper>
