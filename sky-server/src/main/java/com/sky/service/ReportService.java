@@ -7,6 +7,7 @@ import com.sky.vo.UserReportVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 
 /**
@@ -26,4 +27,6 @@ public interface ReportService {
     OrderReportVO getOrderStatistics(LocalDate begin, LocalDate end);
 
     SalesTop10ReportVO getSalesRankingTop10(LocalDate begin, LocalDate end);
+
+    void exportBusinessData(HttpServletResponse response);
 }
