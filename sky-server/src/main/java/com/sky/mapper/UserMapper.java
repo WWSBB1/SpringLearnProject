@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Map;
+
 /**
  * @Author Cheems
  * @Date 2023/8/12 18:40
@@ -26,4 +28,6 @@ public interface UserMapper {
 
     @Select("select * from user where id=#{userId}")
     User getById(Long userId);
+
+    Integer countByMap(Map map);
 }
